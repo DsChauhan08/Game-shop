@@ -4,6 +4,10 @@ A one place stop for Web games and Ideas
 
 ## Description
 
+Many of the games in our repository are open-source projects, 
+meaning you can not only play them but also contribute to their development.
+Whether you're an experienced coder looking to collaborate or a newcomer eager to learn, these open-source games provide an excellent opportunity to get involved in the world of game development.
+
 
 
 ## Getting Started
