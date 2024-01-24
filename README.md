@@ -8,6 +8,7 @@ Many of the games in our repository are open-source projects,
 meaning you can not only play them but also contribute to their development.
 Whether you're an experienced coder looking to collaborate or a newcomer eager to learn, these open-source games provide an excellent opportunity to get involved in the world of game development.
 
+This is my way in learning the 3d libraries aswell as the og side of javascript and learning it while reading and modifying others program.
 
 
 ## Getting Started
@@ -35,5 +36,3 @@ Dhananjay Singh [@DsChauhan08](https://github.com/DsChauhan08)
 
 This project is licensed under the  GNU GENERAL PUBLIC LICENSE - see the LICENSE.md file for details
 
-## Acknowledgments
-under progres......
