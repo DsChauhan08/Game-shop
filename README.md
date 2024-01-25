@@ -1,6 +1,6 @@
 # Game-Shop
 
-A one place stop for Web games and Ideas
+A one place stop for Web games and Ideas. 
 
 ## Description
 
