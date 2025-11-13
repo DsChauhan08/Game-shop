@@ -1,5 +1,5 @@
-const counterDOM = document.getElementById('counter');  
-const endDOM = document.getElementById('end');  
+let counterDOM;  
+let endDOM;  
 
 const scene = new THREE.Scene();
 
@@ -34,6 +34,7 @@ let previousTimestamp;
 let startMoving;
 let moves;
 let stepStartTimestamp;
+let isGameOver;
 
 const carFrontTexture = new Texture(40,80,[{x: 0, y: 10, w: 30, h: 60 }]);
 const carBackTexture = new Texture(40,80,[{x: 10, y: 10, w: 30, h: 60 }]);
@@ -62,12 +63,12 @@ const addLane = () => {
 const chicken = new Chicken();
 scene.add( chicken );
 
-hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
 scene.add(hemiLight)
 
 const initialDirLightPositionX = -100;
 const initialDirLightPositionY = -100;
-dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
 dirLight.position.set(initialDirLightPositionX, initialDirLightPositionY, 200);
 dirLight.castShadow = true;
 dirLight.target = chicken;
@@ -85,7 +86,7 @@ dirLight.shadow.camera.bottom = - d;
 // var helper = new THREE.CameraHelper( camera );
 // scene.add(helper)
 
-backLight = new THREE.DirectionalLight(0x000000, .4);
+const backLight = new THREE.DirectionalLight(0x000000, .4);
 backLight.position.set(200, 200, 50);
 backLight.castShadow = true;
 scene.add(backLight)
@@ -106,6 +107,7 @@ const initaliseValues = () => {
   startMoving = false;
   moves = [];
   stepStartTimestamp;
+  isGameOver = false;
 
   chicken.position.x = 0;
   chicken.position.y = 0;
@@ -115,6 +117,8 @@ const initaliseValues = () => {
 
   dirLight.position.x = initialDirLightPositionX;
   dirLight.position.y = initialDirLightPositionY;
+  
+  if (counterDOM) counterDOM.innerHTML = 0;
 }
 
 initaliseValues();
@@ -249,8 +253,8 @@ function Truck() {
   return truck;  
 }
 
-function Three() {
-  const three = new THREE.Group();
+function Tree() {
+  const tree = new THREE.Group();
 
   const trunk = new THREE.Mesh(
     new THREE.BoxBufferGeometry( 15*zoom, 15*zoom, 20*zoom ), 
@@ -259,9 +263,9 @@ function Three() {
   trunk.position.z = 10*zoom;
   trunk.castShadow = true;
   trunk.receiveShadow = true;
-  three.add(trunk);
+  tree.add(trunk);
 
-  height = threeHeights[Math.floor(Math.random()*threeHeights.length)];
+  const height = threeHeights[Math.floor(Math.random()*threeHeights.length)];
 
   const crown = new THREE.Mesh(
     new THREE.BoxBufferGeometry( 30*zoom, 30*zoom, height*zoom ), 
@@ -270,9 +274,9 @@ function Three() {
   crown.position.z = (height/2+20)*zoom;
   crown.castShadow = true;
   crown.receiveShadow = false;
-  three.add(crown);
+  tree.add(crown);
 
-  return three;  
+  return tree;
 }
 
 function Chicken() {
@@ -360,16 +364,16 @@ function Lane(index) {
       this.mesh = new Grass();
 
       this.occupiedPositions = new Set();
-      this.threes = [1,2,3,4].map(() => {
-        const three = new Three();
+      this.trees = [1,2,3,4].map(() => {
+        const tree = new Tree();
         let position;
         do {
           position = Math.floor(Math.random()*columns);
         }while(this.occupiedPositions.has(position))
           this.occupiedPositions.add(position);
-        three.position.x = (position*positionWidth+positionWidth/2)*zoom-boardWidth*zoom/2;
-        this.mesh.add( three );
-        return three;
+        tree.position.x = (position*positionWidth+positionWidth/2)*zoom-boardWidth*zoom/2;
+        this.mesh.add( tree );
+        return tree;
       })
       break;
     }
@@ -451,7 +455,17 @@ window.addEventListener("keydown", event => {
   }
 });
 
+// Initialize DOM elements and start game
+window.addEventListener('DOMContentLoaded', () => {
+  counterDOM = document.getElementById('counter');
+  endDOM = document.getElementById('end');
+  counterDOM.innerHTML = 0;
+  requestAnimationFrame( animate );
+});
+
 function move(direction) {
+  if (isGameOver) return;
+  
   const finalPositions = moves.reduce((position,move) => {
     if(move === 'forward') return {lane: position.lane+1, column: position.column};
     if(move === 'backward') return {lane: position.lane-1, column: position.column};
@@ -524,7 +538,7 @@ function animate(timestamp) {
         break;
       }
       case 'backward': {
-        positionY = currentLane*positionWidth*zoom - moveDeltaDistance
+        const positionY = currentLane*positionWidth*zoom - moveDeltaDistance
         camera.position.y = initialCameraPositionY + positionY;
         dirLight.position.y = initialDirLightPositionY + positionY; 
         chicken.position.y = positionY;
@@ -555,12 +569,11 @@ function animate(timestamp) {
       switch(moves[0]) {
         case 'forward': {
           currentLane++;
-          counterDOM.innerHTML = currentLane;    
+          if (counterDOM) counterDOM.innerHTML = currentLane;    
           break;
         }
         case 'backward': {
           currentLane--;
-          counterDOM.innerHTML = currentLane;    
           break;
         }
         case 'left': {
@@ -579,7 +592,7 @@ function animate(timestamp) {
   }
 
   // Hit test
-  if(lanes[currentLane].type === 'car' || lanes[currentLane].type === 'truck') {
+  if(!isGameOver && (lanes[currentLane].type === 'car' || lanes[currentLane].type === 'truck')) {
     const chickenMinX = chicken.position.x - chickenSize*zoom/2;
     const chickenMaxX = chicken.position.x + chickenSize*zoom/2;
     const vechicleLength = { car: 60, truck: 105}[lanes[currentLane].type]; 
@@ -587,6 +600,7 @@ function animate(timestamp) {
       const carMinX = vechicle.position.x - vechicleLength*zoom/2;
       const carMaxX = vechicle.position.x + vechicleLength*zoom/2;
       if(chickenMaxX > carMinX && chickenMinX < carMaxX) {
+        isGameOver = true;
         endDOM.style.visibility = 'visible';
       }
     });
@@ -594,5 +608,3 @@ function animate(timestamp) {
   }
   renderer.render( scene, camera );	
 }
-
-requestAnimationFrame( animate );

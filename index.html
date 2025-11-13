@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Game Shop - Experience the finest collection of browser games. Play ping pong, tic tac toe, tower defense and more!">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Performance optimizations -->
+    <meta http-equiv="cache-control" content="public, max-age=31536000">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    
+    <title>Game Shop - Your Ultimate Gaming Hub</title>
+    
+    <!-- Critical CSS inlined for faster initial render -->
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Poppins',sans-serif;min-height:100vh;overflow-x:hidden;color:#fff;background:#667eea}.background{position:fixed;width:100vw;height:100vh;top:0;left:0;background:linear-gradient(135deg,#667eea 0%,#764ba2 25%,#f093fb 50%,#4facfe 75%,#00f2fe 100%);z-index:-2}.container{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:40px 20px}
+    </style>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    
+    <!-- Async load full stylesheet -->
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+    
+    <!-- Preconnect to font resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
+    </script>
+</head>
+<body>
+    <div class="background">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">🎮</div>
+                <h1>Game Shop</h1>
+            </div>
+            <p class="subtitle">Experience the finest collection of browser games</p>
+        </header>
+
+        <div class="games-grid">
+            <a href="ping-pong/index.html" class="game-card">
+                <div class="card-icon">🏓</div>
+                <h3>Ping Pong</h3>
+                <p>Classic arcade table tennis action</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="tic-tak-toe/index.html" class="game-card">
+                <div class="card-icon">❌</div>
+                <h3>Tic Tac Toe</h3>
+                <p>The timeless strategy game</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="rubiks-cube/index.html" class="game-card">
+                <div class="card-icon">🎲</div>
+                <h3>Rubik's Cube</h3>
+                <p>Solve the colorful puzzle</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="tower-blocks/index.html" class="game-card">
+                <div class="card-icon">🏗️</div>
+                <h3>Tower Blocks</h3>
+                <p>Stack blocks and build high</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="tower-defence/index.html" class="game-card">
+                <div class="card-icon">🗼</div>
+                <h3>Tower Defence</h3>
+                <p>Defend your territory strategically</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="stick_hero/index.html" class="game-card">
+                <div class="card-icon">🦸</div>
+                <h3>Stick Hero</h3>
+                <p>Extend your stick and cross gaps</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="chicken-cross/index.html" class="game-card">
+                <div class="card-icon">🐔</div>
+                <h3>Chicken Cross</h3>
+                <p>Help the chicken cross safely</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="bulls-eye-arrow/index.html" class="game-card">
+                <div class="card-icon">🎯</div>
+                <h3>Bulls Eye Arrow</h3>
+                <p>Test your archery precision</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="air-balloon/index.html" class="game-card">
+                <div class="card-icon">🎈</div>
+                <h3>Air Balloon</h3>
+                <p>Navigate through the skies</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="traffic-cars/index.html" class="game-card">
+                <div class="card-icon">🚗</div>
+                <h3>Traffic Cars</h3>
+                <p>Manage the busy traffic flow</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="typing-test/index.html" class="game-card">
+                <div class="card-icon">⌨️</div>
+                <h3>Typing Test</h3>
+                <p>Improve your typing speed</p>
+                <div class="card-shine"></div>
+            </a>
+
+            <a href="menja/index.html" class="game-card">
+                <div class="card-icon">🎮</div>
+                <h3>Menja</h3>
+                <p>Addictive puzzle gameplay</p>
+                <div class="card-shine"></div>
+            </a>
+        </div>
+
+        <footer class="footer">
+            <p>Made with ❤️ for gamers</p>
+        </footer>
+    </div>
+
+    <!-- Defer non-critical JavaScript -->
+    <script defer src="script.js"></script>
+    
+    <!-- Prefetch game pages for faster navigation -->
+    <script>
+        if('requestIdleCallback' in window){requestIdleCallback(()=>{const links=['ping-pong/index.html','tic-tak-toe/index.html','rubiks-cube/index.html','tower-blocks/index.html','tower-defence/index.html','stick_hero/index.html','chicken-cross/index.html','bulls-eye-arrow/index.html','air-balloon/index.html','traffic-cars/index.html','typing-test/index.html','menja/index.html'];links.forEach(link=>{const l=document.createElement('link');l.rel='prefetch';l.href=link;document.head.appendChild(l)})})}
+    </script>
+</body>
+</html>
